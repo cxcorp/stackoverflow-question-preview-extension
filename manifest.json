@@ -9,7 +9,6 @@
   "content_scripts": [
     {
       "js": ["scripts/content.js"],
-      "css": ["scripts/main.css"],
       "matches": [
         "https://stackoverflow.com/questions",
         "https://stackoverflow.com/questions/*"

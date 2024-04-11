@@ -1,4 +1,4 @@
-#chrome-extension-tooltip {
+.tooltip {
   width: max-content;
   position: absolute;
   top: 0;
@@ -13,7 +13,11 @@
   display: none;
 }
 
-#chrome-extension-tooltip > .chrome-extension-tooltip--arrow {
+.tooltipVisible {
+  display: block;
+}
+
+.arrow {
   position: absolute;
   background: #222;
   width: 8px;

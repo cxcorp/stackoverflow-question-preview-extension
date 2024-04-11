@@ -1,15 +1,17 @@
 import { arrow, computePosition, flip, offset, shift } from "@floating-ui/dom";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { createRoot } from "react-dom/client";
-import { isNotNil } from "./util";
+import * as styles from "./Tooltip.module.css";
+import { classNames } from "./util/classNames";
+import { isNotNil } from "./util/ts";
 
 const updateTooltip = (
   reference: HTMLElement,
   floating: HTMLElement,
   arrowElement: HTMLElement
 ) => {
-  computePosition(reference, floating, {
+  return computePosition(reference, floating, {
     placement: "bottom",
     middleware: [
       offset(6),
@@ -48,6 +50,7 @@ interface AppProps {
 }
 
 const App = ({ questions }: AppProps) => {
+  const [visible, setVisible] = useState<boolean>(false);
   const tooltipRef = useRef<HTMLDivElement>(null);
   const arrowRef = useRef<HTMLDivElement>(null);
 
@@ -57,13 +60,19 @@ const App = ({ questions }: AppProps) => {
     if (!tooltipRef.current) return;
     if (!arrowRef.current) return;
 
-    updateTooltip(question, tooltipRef.current, arrowRef.current);
+    updateTooltip(question, tooltipRef.current, arrowRef.current).then(() => {
+      setVisible(true);
+    });
   }, [questions]);
 
   return (
-    <div ref={tooltipRef} id="chrome-extension-tooltip" role="dialog">
+    <div
+      ref={tooltipRef}
+      role="dialog"
+      className={classNames(styles.tooltip, visible && styles.tooltipVisible)}
+    >
       <div className="chrome-extension-tooltip-content">content</div>
-      <div ref={arrowRef} className="chrome-extension-tooltip--arrow"></div>
+      <div ref={arrowRef} className={styles.arrow}></div>
     </div>
   );
 };

@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "esbuild scripts/content.ts --bundle --minify --sourcemap --target=chrome120 --outfile=scripts/content.js",
-    "watch": "esbuild scripts/content.ts --bundle --minify --sourcemap --target=chrome120 --outfile=scripts/content.js --watch"
+    "build": "esbuild scripts/src/index.ts --bundle --minify --sourcemap --target=chrome120 --outfile=scripts/dist/index.js",
+    "watch": "esbuild scripts/src/index.ts --bundle --minify --sourcemap --target=chrome120 --outfile=scripts/dist/index.js --watch"
   },
   "keywords": [],
   "author": "",
@@ -23,7 +23,8 @@
     "eslint-plugin-promise": "6.1.1",
     "eslint-plugin-react": "7.34.1",
     "eslint-plugin-react-hooks": "4.6.0",
-    "typescript": "5.4.5"
+    "typescript": "5.4.5",
+    "typescript-plugin-css-modules": "5.1.0"
   },
   "dependencies": {
     "@floating-ui/dom": "1.6.3",
