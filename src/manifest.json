@@ -8,10 +8,10 @@
   },
   "content_scripts": [
     {
-      "js": ["scripts/content.js"],
+      "js": ["scripts/index.ts"],
       "matches": [
         "https://stackoverflow.com/questions",
-        "https://stackoverflow.com/questions/*"
+        "https://stackoverflow.com/questions/tagged/*"
       ]
     }
   ]

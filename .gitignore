@@ -1,4 +1,4 @@
-.vscode/
+/.vscode
 /scripts/**/*.js
 /scripts/**/*.js.map
 

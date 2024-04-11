@@ -1,0 +1,46 @@
+.tooltip {
+  display: none;
+
+  width: max-content;
+  position: absolute;
+
+  z-index: 9999;
+  top: 0;
+  left: 0;
+
+  box-sizing: border-box;
+}
+
+.tooltipContent {
+  max-height: 100%;
+  box-sizing: border-box;
+
+  overflow-y: auto;
+  scrollbar-width: thin;
+
+  padding: 10px 15px 0 10px;
+  border: 1px solid var(--black-200, #424548);
+  background-color: var(--black-150, #424548);
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 3px -2px,
+    rgba(0, 0, 0, 0.14) 0px 3px 4px 0px, rgba(0, 0, 0, 0.12) 0px 1px 8px 0px;
+}
+
+.tooltipVisible {
+  display: block;
+}
+
+.arrow {
+  position: absolute;
+  z-index: -1;
+  width: 16px;
+  height: 16px;
+  transform: rotate(45deg);
+  background-color: var(--black-150, #424548);
+  border-top: 1px solid var(--black-200, #424548);
+  border-left: 1px solid var(--black-200, #424548);
+}
+
+.contentContainer {
+  display: block;
+}

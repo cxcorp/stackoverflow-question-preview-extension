@@ -1,4 +1,4 @@
-import { renderRoot } from "./Tooltip";
+import { renderRoot } from "./root";
 
 function main() {
   const questions = document.querySelectorAll<HTMLAnchorElement>(
