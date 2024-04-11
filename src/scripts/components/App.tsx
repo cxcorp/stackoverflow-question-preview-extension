@@ -23,6 +23,7 @@ const MAX_DIALOG_HEIGHT = 550;
 const updateTooltip = (
   reference: HTMLElement,
   floating: HTMLElement,
+  tooltipContentContainer: HTMLElement,
   arrowElement: HTMLElement
 ) => {
   return computePosition(reference, floating, {
@@ -40,15 +41,14 @@ const updateTooltip = (
             maxHeight: `${maxHeight}px`,
           });
 
-          const contentContainer = elements.floating.querySelector<HTMLElement>(
-            "[data-extension-tooltip-content]"
-          );
-          if (contentContainer) {
-            Object.assign(contentContainer.style, {
-              maxWidth: `${maxWidth}px`,
-              maxHeight: `${maxHeight - 10}px`,
-            });
-          }
+          // Also need to set a max height to the div which is the
+          // or otherwise it just overflows out of the tooltip. We don't
+          // want to set `overflow:scroll` to the tooltip parent div
+          // or otherwise it clips out the arrow element.
+          Object.assign(tooltipContentContainer.style, {
+            maxWidth: `${maxWidth}px`,
+            maxHeight: `${maxHeight - 10}px`,
+          });
         },
       }),
       arrow({ padding: 10, element: arrowElement }),
@@ -136,6 +136,7 @@ const useQuestionHover = (
 
 export const App = ({ questions }: AppProps) => {
   const tooltipRef = useRef<HTMLDivElement>(null);
+  const tooltipContentContainerRef = useRef<HTMLDivElement>(null);
   const arrowRef = useRef<HTMLDivElement>(null);
 
   const [activeReference, setActiveReference] =
@@ -181,7 +182,8 @@ export const App = ({ questions }: AppProps) => {
       !activeReference ||
       !content ||
       !tooltipRef.current ||
-      !arrowRef.current
+      !arrowRef.current ||
+      !tooltipContentContainerRef.current
     ) {
       return;
     }
@@ -189,6 +191,7 @@ export const App = ({ questions }: AppProps) => {
     updateTooltip(
       activeReference.parentElement!,
       tooltipRef.current,
+      tooltipContentContainerRef.current,
       arrowRef.current
     );
   }, [activeReference, content]);
@@ -199,7 +202,7 @@ export const App = ({ questions }: AppProps) => {
       role="dialog"
       className={classNames(styles.tooltip, content && styles.tooltipVisible)}
     >
-      <div data-extension-tooltip-content="" className={styles.tooltipContent}>
+      <div ref={tooltipContentContainerRef} className={styles.tooltipContent}>
         <div className={styles.contentContainer}>{content}</div>
       </div>
       <div ref={arrowRef} className={styles.arrow}></div>
