@@ -9,19 +9,7 @@ function main() {
     return;
   }
 
-  const unmount = renderRoot(document.body, [...questions]);
-  console.log("unmount:", unmount);
-
-  // (
-  //   [
-  //     ["mouseenter", showTooltip],
-  //     ["mouseleave", hideTooltip],
-  //     ["focus", showTooltip],
-  //     ["blur", hideTooltip],
-  //   ] as const
-  // ).forEach(([event, listener]) => {
-  //   question.addEventListener(event, listener);
-  // });
+  renderRoot(document.body, [...questions]);
 }
 
 main();
