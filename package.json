@@ -1,0 +1,33 @@
+{
+  "name": "extension-hello-world",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "esbuild scripts/content.ts --bundle --minify --sourcemap --target=chrome120 --outfile=scripts/content.js",
+    "watch": "esbuild scripts/content.ts --bundle --minify --sourcemap --target=chrome120 --outfile=scripts/content.js --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/react": "18.2.75",
+    "@types/react-dom": "18.2.24",
+    "@typescript-eslint/eslint-plugin": "7.6.0",
+    "@typescript-eslint/parser": "7.6.0",
+    "chrome-types": "0.1.279",
+    "esbuild": "0.20.2",
+    "eslint": "8.57.0",
+    "eslint-config-prettier": "9.1.0",
+    "eslint-plugin-import": "2.29.1",
+    "eslint-plugin-promise": "6.1.1",
+    "eslint-plugin-react": "7.34.1",
+    "eslint-plugin-react-hooks": "4.6.0",
+    "typescript": "5.4.5"
+  },
+  "dependencies": {
+    "@floating-ui/dom": "1.6.3",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  }
+}

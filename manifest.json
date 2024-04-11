@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "StackOverflow Question Previews",
+  "description": "Show previews of StackOverflow questions on hover, like on Wikipedia.",
+  "version": "0.1",
+  "action": {
+    "default_popup": "popup/hello.html"
+  },
+  "content_scripts": [
+    {
+      "js": ["scripts/content.js"],
+      "css": ["scripts/main.css"],
+      "matches": [
+        "https://stackoverflow.com/questions",
+        "https://stackoverflow.com/questions/*"
+      ]
+    }
+  ]
+}
