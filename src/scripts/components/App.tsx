@@ -147,16 +147,10 @@ export const App = ({ questionAnchors }: AppProps) => {
 
   const handleQuestionEnter = useCallback(
     async (reference: HTMLAnchorElement) => {
-      fetchAbortController.current?.abort();
       if (fetchAbortController.current) {
         fetchAbortController.current.abort();
         fetchAbortController.current = null;
       }
-
-      if (!tooltipRef.current) return;
-      if (!arrowRef.current) return;
-
-      console.log(reference.href);
 
       const ac = new AbortController();
       fetchAbortController.current = ac;
@@ -164,14 +158,22 @@ export const App = ({ questionAnchors }: AppProps) => {
       setContent("Loading");
       setActiveReference(reference);
 
+      // Important: pass the newly created AbortController's signal
+      // instead of reading it via fetchAbortController.current each time!
+      // Otherwise if a new one is created and set to the ref, the reference
+      // changes to a non-aborted signal!
       const html = await fetchQuestionHtml(reference.href, ac.signal);
+      ac.signal.throwIfAborted();
       setContent(<div dangerouslySetInnerHTML={{ __html: html }} />);
     },
     []
   );
 
   const handleQuestionLeave = useCallback(() => {
-    fetchAbortController.current?.abort();
+    if (fetchAbortController.current) {
+      fetchAbortController.current.abort();
+      fetchAbortController.current = null;
+    }
     setContent(null);
   }, []);
 
