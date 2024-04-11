@@ -84,7 +84,7 @@ const updateTooltip = (
 };
 
 interface AppProps {
-  questions: HTMLAnchorElement[];
+  questionAnchors: HTMLAnchorElement[];
 }
 
 const useQuestionHover = (
@@ -134,7 +134,7 @@ const useQuestionHover = (
   }, [anchors, onEnter, onLeave]);
 };
 
-export const App = ({ questions }: AppProps) => {
+export const App = ({ questionAnchors }: AppProps) => {
   const tooltipRef = useRef<HTMLDivElement>(null);
   const tooltipContentContainerRef = useRef<HTMLDivElement>(null);
   const arrowRef = useRef<HTMLDivElement>(null);
@@ -175,7 +175,7 @@ export const App = ({ questions }: AppProps) => {
     setContent(null);
   }, []);
 
-  useQuestionHover(questions, handleQuestionEnter, handleQuestionLeave);
+  useQuestionHover(questionAnchors, handleQuestionEnter, handleQuestionLeave);
 
   useLayoutEffect(() => {
     if (
