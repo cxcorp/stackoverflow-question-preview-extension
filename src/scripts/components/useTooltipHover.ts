@@ -13,6 +13,7 @@ export const useTooltipHover = <T extends HTMLElement>(
 ) => {
   const enterTimeoutHandle = useRef<number | undefined>(undefined);
   const leaveTimeoutHandle = useRef<number | undefined>(undefined);
+  const isShowing = useRef<boolean>(false);
 
   const cancelTimers = useCallback(() => {
     clearTimeout(enterTimeoutHandle.current);
@@ -30,6 +31,7 @@ export const useTooltipHover = <T extends HTMLElement>(
       cancelTimers();
       enterTimeoutHandle.current = setTimeout(() => {
         cancelTimers();
+        isShowing.current = true;
         onEnter(target as T);
       }, showDelay);
     },
@@ -40,7 +42,10 @@ export const useTooltipHover = <T extends HTMLElement>(
     cancelTimers();
     leaveTimeoutHandle.current = setTimeout(() => {
       cancelTimers();
-      onLeave();
+      if (isShowing.current) {
+        isShowing.current = false;
+        onLeave();
+      }
     }, hideDelay);
   }, [cancelTimers, onLeave, hideDelay]);
 
@@ -61,7 +66,9 @@ export const useTooltipHover = <T extends HTMLElement>(
         target.removeEventListener("mouseenter", onTargetMouseEnter);
         target.removeEventListener("mouseleave", onMouseLeave);
       }
-      onLeave();
+      if (isShowing.current) {
+        onLeave();
+      }
     };
   }, [targets, onTargetMouseEnter, onMouseLeave, cancelTimers, onLeave]);
 
