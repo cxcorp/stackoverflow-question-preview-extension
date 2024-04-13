@@ -48,7 +48,11 @@ export const App = ({ questionAnchors }: AppProps) => {
     setContent(null);
   }, []);
 
-  useTooltipHover(questionAnchors, handleQuestionEnter, handleQuestionLeave);
+  const { onTooltipMouseEnter, onTooltipMouseLeave } = useTooltipHover(
+    questionAnchors,
+    handleQuestionEnter,
+    handleQuestionLeave
+  );
 
   useLayoutEffect(() => {
     if (
@@ -76,6 +80,8 @@ export const App = ({ questionAnchors }: AppProps) => {
       ref={tooltipRef}
       role="dialog"
       className={classNames(styles.tooltip, content && styles.tooltipVisible)}
+      onMouseEnter={onTooltipMouseEnter}
+      onMouseLeave={onTooltipMouseLeave}
     >
       <div ref={tooltipContentContainerRef} className={styles.tooltipContent}>
         <div className={styles.contentContainer}>{content}</div>
