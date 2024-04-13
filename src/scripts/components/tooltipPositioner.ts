@@ -7,6 +7,9 @@ import {
   size,
 } from "@floating-ui/dom";
 
+const isNotNil = <T>(value: T | null | undefined): value is T =>
+  value !== null && typeof value !== "undefined";
+
 const MAX_DIALOG_WIDTH = 700;
 const MAX_DIALOG_HEIGHT = 550;
 
@@ -60,10 +63,10 @@ export const updateTooltipPosition = (
 
     if (staticSide && data) {
       Object.assign(arrowElement.style, {
-        left:
-          typeof data.x !== "undefined" && data.x !== null ? `${data.x}px` : "",
-        top:
-          typeof data.y !== "undefined" && data.y !== null ? `${data.y}px` : "",
+        // docs say .x and .y can also be null? typings say not?
+        // let's be safe here
+        left: isNotNil(data.x) ? `${data.x}px` : "",
+        top: isNotNil(data.y) ? `${data.y}px` : "",
         right: "",
         bottom: "",
         [staticSide]: "-7px",
