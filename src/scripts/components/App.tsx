@@ -3,7 +3,7 @@ import { fetchQuestionHtml } from "../services/questions";
 import { classNames } from "../util/classNames";
 import * as styles from "./App.module.css";
 import { updateTooltipPosition } from "./tooltipPositioner";
-import { useQuestionHover } from "./useQuestionHover";
+import { useTooltipHover } from "./useTooltipHover";
 
 interface AppProps {
   questionAnchors: HTMLAnchorElement[];
@@ -52,7 +52,7 @@ export const App = ({ questionAnchors }: AppProps) => {
     setContent(null);
   }, []);
 
-  useQuestionHover(questionAnchors, handleQuestionEnter, handleQuestionLeave);
+  useTooltipHover(questionAnchors, handleQuestionEnter, handleQuestionLeave);
 
   useLayoutEffect(() => {
     if (

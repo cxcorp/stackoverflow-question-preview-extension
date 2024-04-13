@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-export const useQuestionHover = (
+export const useTooltipHover = (
   anchors: HTMLAnchorElement[],
   onEnter: (e: HTMLAnchorElement) => void,
   onLeave: () => void
