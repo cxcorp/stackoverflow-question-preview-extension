@@ -10,7 +10,7 @@ import {
 const MAX_DIALOG_WIDTH = 700;
 const MAX_DIALOG_HEIGHT = 550;
 
-export const updateTooltip = (
+export const updateTooltipPosition = (
   reference: HTMLElement,
   floating: HTMLElement,
   tooltipContentContainer: HTMLElement,

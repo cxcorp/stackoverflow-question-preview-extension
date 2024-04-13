@@ -2,7 +2,7 @@ import React, { useCallback, useLayoutEffect, useRef, useState } from "react";
 import { fetchQuestionHtml } from "../services/questions";
 import { classNames } from "../util/classNames";
 import * as styles from "./App.module.css";
-import { updateTooltip } from "./tooltipPositioner";
+import { updateTooltipPosition } from "./tooltipPositioner";
 import { useQuestionHover } from "./useQuestionHover";
 
 interface AppProps {
@@ -65,7 +65,7 @@ export const App = ({ questionAnchors }: AppProps) => {
       return;
     }
 
-    updateTooltip(
+    updateTooltipPosition(
       activeReference.parentElement!,
       tooltipRef.current,
       tooltipContentContainerRef.current,
