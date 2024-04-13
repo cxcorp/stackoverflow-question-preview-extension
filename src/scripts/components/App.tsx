@@ -22,10 +22,8 @@ export const App = ({ questionAnchors }: AppProps) => {
 
   const handleQuestionEnter = useCallback(
     async (reference: HTMLAnchorElement) => {
-      if (fetchAbortController.current) {
-        fetchAbortController.current.abort();
-        fetchAbortController.current = null;
-      }
+      fetchAbortController.current?.abort();
+      fetchAbortController.current = null;
 
       const ac = new AbortController();
       fetchAbortController.current = ac;
@@ -45,10 +43,8 @@ export const App = ({ questionAnchors }: AppProps) => {
   );
 
   const handleQuestionLeave = useCallback(() => {
-    if (fetchAbortController.current) {
-      fetchAbortController.current.abort();
-      fetchAbortController.current = null;
-    }
+    fetchAbortController.current?.abort();
+    fetchAbortController.current = null;
     setContent(null);
   }, []);
 
