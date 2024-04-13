@@ -1,3 +1,5 @@
+import { createPreviewHtml } from "./previewHtmlCreator";
+
 const cachedQuestionHtmls = new Map<string, string>();
 
 const validateQuestionUrl = (href: string): string => {
@@ -13,12 +15,14 @@ const validateQuestionUrl = (href: string): string => {
 
 const fetchQuestionPageHtml = async (
   href: string,
-  abortSignal: AbortSignal
+  signal: AbortSignal
 ): Promise<string> => {
+  signal.throwIfAborted();
+
   const res = await fetch(href, {
     method: "GET",
     mode: "no-cors",
-    signal: abortSignal,
+    signal: signal,
   });
   if (!res.ok) {
     throw new Error("res not ok");
@@ -27,10 +31,12 @@ const fetchQuestionPageHtml = async (
   return await res.text();
 };
 
-export const fetchQuestionHtml = async (
+export const fetchPreviewHtml = async (
   href: string,
   abortSignal: AbortSignal
 ): Promise<string> => {
+  abortSignal.throwIfAborted();
+
   href = validateQuestionUrl(href);
 
   if (cachedQuestionHtmls.has(href)) {
@@ -40,15 +46,7 @@ export const fetchQuestionHtml = async (
   const pageHtml = await fetchQuestionPageHtml(href, abortSignal);
   abortSignal.throwIfAborted();
 
-  const domParser = new DOMParser();
-  const doc = domParser.parseFromString(pageHtml, "text/html");
-
-  const post = doc.querySelector("#question .postcell");
-  if (!post) {
-    throw new Error("Failed to find question");
-  }
-
-  const html = post.innerHTML;
+  const html = createPreviewHtml(pageHtml);
   cachedQuestionHtmls.set(href, html);
   return html;
 };

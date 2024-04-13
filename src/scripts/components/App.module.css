@@ -12,15 +12,16 @@
 }
 
 .tooltipContent {
+  /* make the iframe try to take up as much space as necessary
+   * since floating-ui's calculates maxWidth/maxHeight */
+  width: 100vw;
+  height: 100vh;
+
   max-height: 100%;
   box-sizing: border-box;
 
-  overflow-y: auto;
-  scrollbar-width: thin;
-
-  padding: 10px 15px 0 10px;
   border: 1px solid var(--black-200, #424548);
-  background-color: var(--black-150, #424548);
+  background-color: var(--black-150, #333638);
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 3px -2px,
     rgba(0, 0, 0, 0.14) 0px 3px 4px 0px, rgba(0, 0, 0, 0.12) 0px 1px 8px 0px;

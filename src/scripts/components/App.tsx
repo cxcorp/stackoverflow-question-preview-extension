@@ -1,5 +1,5 @@
 import React, { useCallback, useLayoutEffect, useRef, useState } from "react";
-import { fetchQuestionHtml } from "../services/questions";
+import { fetchPreviewHtml } from "../services/questions";
 import { classNames } from "../util/classNames";
 import * as styles from "./App.module.css";
 import { updateTooltipPosition } from "./tooltipPositioner";
@@ -11,12 +11,12 @@ interface AppProps {
 
 export const App = ({ questionAnchors }: AppProps) => {
   const tooltipRef = useRef<HTMLDivElement>(null);
-  const tooltipContentContainerRef = useRef<HTMLDivElement>(null);
+  const tooltipContentContainerRef = useRef<HTMLIFrameElement>(null);
   const arrowRef = useRef<HTMLDivElement>(null);
 
   const [activeReference, setActiveReference] =
     useState<HTMLAnchorElement | null>(null);
-  const [content, setContent] = useState<React.ReactNode>(null);
+  const [content, setContent] = useState<string | undefined>(undefined);
 
   const fetchAbortController = useRef<AbortController | null>(null);
 
@@ -35,9 +35,9 @@ export const App = ({ questionAnchors }: AppProps) => {
       // instead of reading it via fetchAbortController.current each time!
       // Otherwise if a new one is created and set to the ref, the reference
       // changes to a non-aborted signal!
-      const html = await fetchQuestionHtml(reference.href, ac.signal);
+      const html = await fetchPreviewHtml(reference.href, ac.signal);
       ac.signal.throwIfAborted();
-      setContent(<div dangerouslySetInnerHTML={{ __html: html }} />);
+      setContent(html);
     },
     []
   );
@@ -45,7 +45,7 @@ export const App = ({ questionAnchors }: AppProps) => {
   const handleQuestionLeave = useCallback(() => {
     fetchAbortController.current?.abort();
     fetchAbortController.current = null;
-    setContent(null);
+    setContent(undefined);
   }, []);
 
   const { onTooltipMouseEnter, onTooltipMouseLeave } = useTooltipHover(
@@ -86,9 +86,12 @@ export const App = ({ questionAnchors }: AppProps) => {
       onMouseEnter={onTooltipMouseEnter}
       onMouseLeave={onTooltipMouseLeave}
     >
-      <div ref={tooltipContentContainerRef} className={styles.tooltipContent}>
-        <div className={styles.contentContainer}>{content}</div>
-      </div>
+      <iframe
+        ref={tooltipContentContainerRef}
+        className={styles.tooltipContent}
+        srcDoc={content}
+        sandbox=""
+      />
       <div ref={arrowRef} className={styles.arrow}></div>
     </div>
   );
