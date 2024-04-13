@@ -62,6 +62,8 @@ export const App = ({ questionAnchors }: AppProps) => {
     }
 
     updateTooltipPosition(
+      // <a> itself can be shorter than fullwidth so target the
+      // parent <h3> instead
       activeReference.parentElement!,
       tooltipRef.current,
       tooltipContentContainerRef.current,
