@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef } from "react";
 
-export const useTooltipHover = (
-  anchors: HTMLAnchorElement[],
-  onEnter: (e: HTMLAnchorElement) => void,
+export const useTooltipHover = <T extends HTMLElement>(
+  targets: T[],
+  onEnter: (e: T) => void,
   onLeave: () => void
 ) => {
   const enterTimeoutHandle = useRef<number | undefined>(undefined);
@@ -15,14 +15,14 @@ export const useTooltipHover = (
   const onTargetMouseEnter = useCallback(
     (e: MouseEvent) => {
       const target = e.currentTarget;
-      if (!target || !(target instanceof HTMLAnchorElement)) {
+      if (!target || !(target instanceof HTMLElement)) {
         return;
       }
 
       cancelEnterTimer();
       enterTimeoutHandle.current = setTimeout(() => {
         cancelEnterTimer();
-        onEnter(target);
+        onEnter(target as T);
       }, 500);
     },
     [cancelEnterTimer, onEnter]
@@ -34,16 +34,16 @@ export const useTooltipHover = (
   }, [cancelEnterTimer, onLeave]);
 
   useEffect(() => {
-    for (const anchor of anchors) {
-      anchor.addEventListener("mouseenter", onTargetMouseEnter);
-      anchor.addEventListener("mouseleave", onMouseLeave);
+    for (const target of targets) {
+      target.addEventListener("mouseenter", onTargetMouseEnter);
+      target.addEventListener("mouseleave", onMouseLeave);
     }
 
     return () => {
-      for (const anchor of anchors) {
-        anchor.removeEventListener("mouseenter", onTargetMouseEnter);
-        anchor.removeEventListener("mouseleave", onMouseLeave);
+      for (const target of targets) {
+        target.removeEventListener("mouseenter", onTargetMouseEnter);
+        target.removeEventListener("mouseleave", onMouseLeave);
       }
     };
-  }, [anchors, onTargetMouseEnter, onMouseLeave, cancelEnterTimer, onLeave]);
+  }, [targets, onTargetMouseEnter, onMouseLeave, cancelEnterTimer, onLeave]);
 };
