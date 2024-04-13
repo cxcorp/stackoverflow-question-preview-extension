@@ -14,7 +14,7 @@ Not on Chrome webstore because I can't be bothered to make it work on other scre
 4. `npm run build`
 5. Now `dist/` contains the unpacked Chrome extension, which you can load via Chrome -> Settings -> Extensions -> Developer mode -> Load unpacked
 6. Now go to https://stackoverflow.com/questions or e.g. https://stackoverflow.com/questions/tagged/node.js and hover a question's title
-  - the extension is only activated on `/questions` or `/questions/*`
+   - the extension is only activated on `/questions` or `/questions/*`
 
 ## Motivation
 
