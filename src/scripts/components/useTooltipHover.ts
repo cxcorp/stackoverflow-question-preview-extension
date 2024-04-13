@@ -50,6 +50,7 @@ export const useTooltipHover = <T extends HTMLElement>(
     }
 
     return () => {
+      cancelTimers();
       for (const target of targets) {
         target.removeEventListener("mouseenter", onTargetMouseEnter);
         target.removeEventListener("mouseleave", onMouseLeave);
