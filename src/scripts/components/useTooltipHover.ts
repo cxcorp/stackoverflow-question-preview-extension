@@ -1,9 +1,15 @@
 import { useCallback, useEffect, useRef } from "react";
 
+interface TooltipHoverOptions<T extends HTMLElement> {
+  onEnter: (e: T) => void;
+  onLeave: () => void;
+  showDelay: number;
+  hideDelay: number;
+}
+
 export const useTooltipHover = <T extends HTMLElement>(
   targets: T[],
-  onEnter: (e: T) => void,
-  onLeave: () => void
+  { onEnter, onLeave, showDelay, hideDelay }: TooltipHoverOptions<T>
 ) => {
   const enterTimeoutHandle = useRef<number | undefined>(undefined);
   const leaveTimeoutHandle = useRef<number | undefined>(undefined);
@@ -25,9 +31,9 @@ export const useTooltipHover = <T extends HTMLElement>(
       enterTimeoutHandle.current = setTimeout(() => {
         cancelTimers();
         onEnter(target as T);
-      }, 500);
+      }, showDelay);
     },
-    [cancelTimers, onEnter]
+    [cancelTimers, onEnter, showDelay]
   );
 
   const onMouseLeave = useCallback(() => {
@@ -35,8 +41,8 @@ export const useTooltipHover = <T extends HTMLElement>(
     leaveTimeoutHandle.current = setTimeout(() => {
       cancelTimers();
       onLeave();
-    }, 500);
-  }, [cancelTimers, onLeave]);
+    }, hideDelay);
+  }, [cancelTimers, onLeave, hideDelay]);
 
   const onTooltipMouseEnter = useCallback(() => {
     // keep the tooltip open

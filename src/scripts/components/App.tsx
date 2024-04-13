@@ -50,10 +50,13 @@ export const App = ({ questionAnchors }: AppProps) => {
 
   const { onTooltipMouseEnter, onTooltipMouseLeave } = useTooltipHover(
     questionAnchors,
-    handleQuestionEnter,
-    handleQuestionLeave
+    {
+      onEnter: handleQuestionEnter,
+      onLeave: handleQuestionLeave,
+      showDelay: 250,
+      hideDelay: 250,
+    }
   );
-
   useLayoutEffect(() => {
     if (
       !activeReference ||
