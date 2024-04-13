@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "build": "parcel build src/manifest.json --config @parcel/config-webextension",
+    "clean": "rimraf .parcel-cache dist",
     "watch": "parcel watch src/manifest.json --host localhost --config @parcel/config-webextension"
   },
   "license": "",
@@ -22,6 +23,7 @@
     "eslint-plugin-react-hooks": "4.6.0",
     "parcel": "2.12.0",
     "process": "0.11.10",
+    "rimraf": "5.0.5",
     "typescript": "5.4.5"
   },
   "dependencies": {
