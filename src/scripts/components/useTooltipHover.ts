@@ -5,13 +5,11 @@ export const useTooltipHover = (
   onEnter: (e: HTMLAnchorElement) => void,
   onLeave: () => void
 ) => {
-  const enterTimeoutHandle = useRef<number | null>(null);
+  const enterTimeoutHandle = useRef<number | undefined>(undefined);
 
   const cancelEnterTimer = useCallback(() => {
-    if (enterTimeoutHandle.current !== null) {
-      clearTimeout(enterTimeoutHandle.current);
-      enterTimeoutHandle.current = null;
-    }
+    clearTimeout(enterTimeoutHandle.current);
+    enterTimeoutHandle.current = undefined;
   }, []);
 
   const onTargetMouseEnter = useCallback(
