@@ -21,7 +21,6 @@ const fetchQuestionPageHtml = async (
     signal: abortSignal,
   });
   if (!res.ok) {
-    console.log(res);
     throw new Error("res not ok");
   }
 
